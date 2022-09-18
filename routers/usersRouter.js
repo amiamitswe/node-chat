@@ -4,8 +4,9 @@ const router = express.Router();
 
 // internal imports
 const { getUsers } = require("../controller/userController");
+const decorateHtmlResponse = require("../middlewares/Common/decorateHtmlResponse");
 
 // // login pae
-router.get("/", getUsers);
+router.get("/", decorateHtmlResponse("Users"), getUsers);
 
 module.exports = router;
