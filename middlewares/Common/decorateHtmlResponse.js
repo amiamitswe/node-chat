@@ -1,11 +1,10 @@
-function decorateHtmlResponse(app_title) {
+function decorateHtmlResponse(page_title) {
   return function (req, res, next) {
     res.locals.html = true;
-    res.locals.title = `${app_title} - ${process.env.APP_NAME}`;
-    res.locals.loggedInYser = {};
+    res.locals.title = `${page_title} - ${process.env.APP_NAME}`;
+    res.locals.loggedInUser = {};
     res.locals.errors = {};
     res.locals.data = {};
-
     next();
   };
 }

@@ -6,22 +6,28 @@
     </div>
     <div class="modal-body">
       <form
-        id="add-user-form"
         method="post"
         action="/users"
         enctype="multipart/form-data"
+        id="add-user-form"
       >
         <input type="text" placeholder="enter name" name="name" />
         <p class="error name-error"></p>
+
         <input type="text" placeholder="enter email" name="email" />
         <p class="error email-error"></p>
+
         <input type="text" placeholder="enter mobile" name="mobile" />
         <p class="error mobile-error"></p>
+
         <input type="password" placeholder="enter password" name="password" />
         <p class="error password-error"></p>
+
         <input type="file" name="avatar" />
         <p class="error avatar-error"></p>
+
         <p class="error common-error"></p>
+
         <input type="submit" value="Submit" />
       </form>
     </div>
@@ -30,9 +36,10 @@
 <script>
   const modal = document.querySelector("#add-user-modal");
   const form = document.querySelector("#add-user-form");
-  // success tost
+
+  // success toast
   const successToast = Toastify({
-    text: "User added successfully, Reloading to the list",
+    text: "User was added successfully! Reloading the list...",
     duration: 1000,
   });
 
@@ -60,38 +67,39 @@
       }
     }
 
-    //prepare the form data
+    // prepare the form data
     const formData = new FormData(form);
 
-    //send the request to server
+    // send the request to server
     let response = await fetch("/users", {
       method: "POST",
       body: formData,
     });
 
-    // get the response
+    // get response
     let result = await response.json();
 
     // handle error and response
-    if (result.error) {
+    if (result.errors) {
       // errors
-      Object.keys(result.error).forEach((fieldName) => {
-        // make error visible to ui by adding error class
+      Object.keys(result.errors).forEach((fieldName) => {
+        // add error class to all inputs
         form[fieldName].classList.add("error");
 
-        // set all error placeholder to p tag
+        // set all error placeholders (p tag) textContent
         const errorPlaceholder = document.querySelector(`.${fieldName}-error`);
-        errorPlaceholder.textContent = result.error[fieldName].msg;
+        errorPlaceholder.textContent = result.errors[fieldName].msg;
 
-        //make all placeholder visible
+        // make all placeholders visible
         errorPlaceholder.style.display = "block";
       });
     } else {
+      // success
       successToast.showToast();
       closeModal();
       document.querySelector("p.error").style.display = "none";
 
-      // page reload after 1 sec
+      // reload the page after 1 second
       setTimeout(() => {
         location.reload();
       }, 1000);
