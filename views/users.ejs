@@ -29,9 +29,13 @@
                   <span><%= user.name %></span>
                 </td>
                 <td><%= user.email %></td>
+                <% if(user.role !== "admin"){ %>
                 <td class="manage">
                   <img src="./images/trash.png" alt="Delete" onclick="deleteUser('<%= user._id %>')"/>
                 </td>
+                <% } else { %>
+                  <td class="manage"><%= user.role %></td>
+                <% } %>
               </tr>
             <% }); %>
           </tbody>
