@@ -4,8 +4,7 @@
   "description": "Learn with Sumit Node.js Chat Application",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=development nodemon app.js",
-    "prod": "NODE_ENV=production node app.js"
+    "start": "NODE_ENV=production node app.js"
   },
   "author": "Amit samadder (by Sumit Shaha)",
   "dependencies": {
